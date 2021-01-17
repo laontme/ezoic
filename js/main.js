@@ -19,29 +19,21 @@ function translate() {
   });
 }
 
-async function langsSelect(origin, langs) {
+function langsSelect(origin, langs) {
   let langFrom = document.getElementById('lang-from');
   let langTo = document.getElementById('lang-to');
-  // let langs = [];
-  // let elements = [];
   langs.forEach((el, i) => {
     let element = document.createElement('option');
     element.value = langs[i]
     element.innerText = origin[langs[i]].title;
     langFrom.appendChild(element);
-    element = document.createElement('option');
-    element.value = langs[i]
-    element.innerText = origin[langs[i]].title;
-    langTo.appendChild(element);
+    langTo.appendChild(element.cloneNode(true));
   });
 }
 
-async function loaded() {
-  dictsPaths.forEach(async el => {
-    // let origin = {};
+function loaded() {
+  dictsPaths.forEach(el => {
     fetch(`/dicts/${el}`).then(res => res.json()).then(origin => {
-      // origin = data;
-      // let origin = await res.json();
       let langs = Object.keys(origin);
       dicts[`${langs[0]}-${langs[1]}`] = [
         origin[langs[0]].letters,
