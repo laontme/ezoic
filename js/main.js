@@ -21,8 +21,7 @@ function translate() {
       let letterCase = detectCcase(el);
       let letterIndex = dicts[`${langFrom}-${langTo}`][0].indexOf(el.toLowerCase());
       if (letterIndex == -1) {
-        document.getElementById('text-to').value = 'Неожиданные символы. Отмена';
-        return;
+        document.getElementById('text-to').value += el;
       } else {
         if (letterCase == 'upper') {
           document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex].toUpperCase();
