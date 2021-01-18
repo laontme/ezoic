@@ -14,8 +14,18 @@ function translate() {
   let result = '';
 
   textFrom.forEach(el => {
-    let letterIndex = dicts[`${langFrom}-${langTo}`][0].indexOf(el);
-    document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex];
+    if (el == ' ') {
+      document.getElementById('text-to').value += ' ';
+      console.log(1111);
+    } else {
+      let letterCase = detectCcase(el);
+      let letterIndex = dicts[`${langFrom}-${langTo}`][0].indexOf(el.toLowerCase());
+      if (letterCase == 'upper') {
+        document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex].toUpperCase();
+      } else {
+        document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex];
+      }
+    }
   });
 }
 
@@ -43,8 +53,24 @@ function loaded() {
         origin[langs[1]].letters,
         origin[langs[0]].letters,
       ];
+      dicts[`${langs[0]}-${langs[0]}`] = [
+        origin[langs[0]].letters,
+        origin[langs[0]].letters,
+      ];
+      dicts[`${langs[1]}-${langs[1]}`] = [
+        origin[langs[1]].letters,
+        origin[langs[1]].letters,
+      ];
       langsSelect(origin, langs);
       document.getElementById('translate').addEventListener('click', translate);
     })
   });
+}
+
+function detectCcase(letter) {
+  if (letter.toUpperCase() == letter) {
+    return 'upper';
+  } else {
+    return 'lower';
+  }
 }
