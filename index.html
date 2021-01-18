@@ -4,20 +4,39 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    main {
+      width: 50%;
+      /* margin-left: 25%; */
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-  <select id="lang-from"></select>
-  <br>
-  <textarea id="text-from" cols="30" rows="10"></textarea>
-  <br>
-  <select id="lang-to"></select>
-  <br>
-  <textarea id="text-to" cols="30" rows="10"></textarea>
-  <br>
-  <button id="translate">Перевести</button>
+  <main>
+    <select class="form-select" id="lang-from"></select>
+    <textarea class="form-control" id="text-from" cols="30" rows="5"></textarea>
+    <br>
+    <select class="form-select" id="lang-to"></select>
+    <textarea class="form-control" id="text-to" cols="30" rows="5"></textarea>
+    <br>
+    <button class="btn btn-primary" id="translate">Перевести</button>
 
-  <script src="js/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  </main>
 </body>
 
 </html>
