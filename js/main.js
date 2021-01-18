@@ -20,10 +20,15 @@ function translate() {
     } else {
       let letterCase = detectCcase(el);
       let letterIndex = dicts[`${langFrom}-${langTo}`][0].indexOf(el.toLowerCase());
-      if (letterCase == 'upper') {
-        document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex].toUpperCase();
+      if (letterIndex == -1) {
+        document.getElementById('text-to').value = 'Неожиданные символы. Отмена';
+        return;
       } else {
-        document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex];
+        if (letterCase == 'upper') {
+          document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex].toUpperCase();
+        } else {
+          document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex];
+        }
       }
     }
   });
