@@ -83,10 +83,11 @@ function detectCcase(letter) {
 
 function disable(e) {
   Array.from(document.getElementsByTagName('option')).forEach(el => {
-    el.disabled = false;
+    if (el.value != 'default') {
+      el.disabled = false;
+    }
   });
   let selected = e.target.value;
   if (selected == 'default') return;
-  // console.log(selected);
   document.querySelectorAll(`option[value="${selected}"]`)[1].disabled = true;
 }
