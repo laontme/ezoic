@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', loaded);
+document.getElementById('lang-from').addEventListener('change', disable);
 
 const dicts = {};
 const dictsPaths = [
@@ -11,6 +12,7 @@ function translate() {
   let textFrom = Array.from(document.getElementById('text-from').value);
   let langFrom = document.getElementById('lang-from').value;
   let langTo = document.getElementById('lang-to').value;
+  if (langFrom == 'default' || langTo == 'default') return;
   let result = '';
 
   textFrom.forEach(el => {
@@ -77,4 +79,14 @@ function detectCcase(letter) {
   } else {
     return 'lower';
   }
+}
+
+function disable(e) {
+  Array.from(document.getElementsByTagName('option')).forEach(el => {
+    el.disabled = false;
+  });
+  let selected = e.target.value;
+  if (selected == 'default') return;
+  // console.log(selected);
+  document.querySelectorAll(`option[value="${selected}"]`)[1].disabled = true;
 }

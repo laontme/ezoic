@@ -26,10 +26,19 @@
 
 <body>
   <main>
-    <select class="form-select" id="lang-from"></select>
+    <div class="input-group">
+      <span class="input-group-text">С какого</span>
+      <select class="form-select" id="lang-from" onchange="">
+        <option value="default" selected="selected"></option>
+      </select>
+      <div class="input-group-text">На какой</div>
+      <select class="form-select" id="lang-to">
+        <option value="default" selected="selected"></option>
+      </select>
+    </div>
+    <br>
     <textarea class="form-control" id="text-from" cols="30" rows="5"></textarea>
     <br>
-    <select class="form-select" id="lang-to"></select>
     <textarea class="form-control" id="text-to" cols="30" rows="5"></textarea>
     <br>
     <button class="btn btn-primary" id="translate">Перевести</button>
