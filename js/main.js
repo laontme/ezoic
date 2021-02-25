@@ -1,93 +1,36 @@
-window.addEventListener('DOMContentLoaded', loaded);
-document.getElementById('lang-from').addEventListener('change', disable);
+import langs from './langs.mjs';
 
-const dicts = {};
-const dictsPaths = [
-  'rus-tit.json',
-  'test.json'
-];
+const langFrom = document.querySelector('#lang-from');
+const langTo = document.querySelector('#lang-to');
+const textFrom = document.querySelector('#text-from');
+const textTo = document.querySelector('#text-to');
 
-function translate() {
-  document.getElementById('text-to').value = '';
-  let textFrom = Array.from(document.getElementById('text-from').value);
-  let langFrom = document.getElementById('lang-from').value;
-  let langTo = document.getElementById('lang-to').value;
-  if (langFrom == 'default' || langTo == 'default') return;
-  let result = '';
+document.querySelector('#translate').addEventListener('click', event => {
+  translate();
+});
 
-  textFrom.forEach(el => {
-    if (el == ' ') {
-      document.getElementById('text-to').value += ' ';
-      console.log(1111);
-    } else {
-      let letterCase = detectCcase(el);
-      let letterIndex = dicts[`${langFrom}-${langTo}`][0].indexOf(el.toLowerCase());
-      if (letterIndex == -1) {
-        document.getElementById('text-to').value += el;
-      } else {
-        if (letterCase == 'upper') {
-          document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex].toUpperCase();
-        } else {
-          document.getElementById('text-to').value += dicts[`${langFrom}-${langTo}`][1][letterIndex];
-        }
-      }
-    }
-  });
-}
-
-function langsSelect(origin, langs) {
-  let langFrom = document.getElementById('lang-from');
-  let langTo = document.getElementById('lang-to');
-  langs.forEach((el, i) => {
-    let element = document.createElement('option');
-    element.value = langs[i]
-    element.innerText = origin[langs[i]].title;
-    langFrom.appendChild(element);
-    langTo.appendChild(element.cloneNode(true));
-  });
-}
-
-function loaded() {
-  dictsPaths.forEach(el => {
-    fetch(`/dicts/${el}`).then(res => res.json()).then(origin => {
-      let langs = Object.keys(origin);
-      dicts[`${langs[0]}-${langs[1]}`] = [
-        origin[langs[0]].letters,
-        origin[langs[1]].letters,
-      ];
-      dicts[`${langs[1]}-${langs[0]}`] = [
-        origin[langs[1]].letters,
-        origin[langs[0]].letters,
-      ];
-      dicts[`${langs[0]}-${langs[0]}`] = [
-        origin[langs[0]].letters,
-        origin[langs[0]].letters,
-      ];
-      dicts[`${langs[1]}-${langs[1]}`] = [
-        origin[langs[1]].letters,
-        origin[langs[1]].letters,
-      ];
-      langsSelect(origin, langs);
-      document.getElementById('translate').addEventListener('click', translate);
-    })
-  });
-}
-
-function detectCcase(letter) {
-  if (letter.toUpperCase() == letter) {
-    return 'upper';
-  } else {
-    return 'lower';
+for (const key in langs) {
+  if (Object.hasOwnProperty.call(langs, key)) {
+    const lang = langs[key];
+    addOption(lang.title, key);
   }
 }
 
-function disable(e) {
-  Array.from(document.getElementsByTagName('option')).forEach(el => {
-    if (el.value != 'default') {
-      el.disabled = false;
-    }
+async function addOption(title, value) {
+  const element = document.createElement('option');
+  element.value = value;
+  element.innerText = title;
+  langFrom.appendChild(element);
+  langTo.appendChild(element.cloneNode(true));
+}
+
+async function translate() {
+  const symbolsFrom = textFrom.value.split(/(?=[А-Я])/);
+  let result = '';
+  symbolsFrom.forEach(symbol => {
+    const id = langs[langFrom.value].symbols.split('|').indexOf(symbol);
+    result += langs[langTo.value].symbols.split('|')[id];
   });
-  let selected = e.target.value;
-  if (selected == 'default') return;
-  document.querySelectorAll(`option[value="${selected}"]`)[1].disabled = true;
+  result = result.replace('@', '');
+  textTo.value = result;
 }
