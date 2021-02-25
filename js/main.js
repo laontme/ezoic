@@ -29,7 +29,11 @@ async function translate() {
   let result = '';
   symbolsFrom.forEach(symbol => {
     const id = langs[langFrom.value].symbols.split('|').indexOf(symbol);
-    result += langs[langTo.value].symbols.split('|')[id];
+    if (id == -1) {
+      result += symbol;
+    } else {
+      result += langs[langTo.value].symbols.split('|')[id];
+    }
   });
   result = result.replace('@', '');
   textTo.value = result;
