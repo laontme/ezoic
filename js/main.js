@@ -25,7 +25,8 @@ async function addOption(title, value) {
 }
 
 async function translate() {
-  const symbolsFrom = textFrom.value.split(/(?=[А-Я])/);
+  const symbolsFrom = textFrom.value.split(/(?=[А-Я]|\n|\040)/);
+  console.log(symbolsFrom);
   let result = '';
   symbolsFrom.forEach(symbol => {
     const id = langs[langFrom.value].symbols.split('|').indexOf(symbol);
@@ -35,6 +36,6 @@ async function translate() {
       result += langs[langTo.value].symbols.split('|')[id];
     }
   });
-  result = result.replace('@', '');
+  result = result.replaceAll('@', '');
   textTo.value = result;
 }
