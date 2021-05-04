@@ -2,13 +2,13 @@ import russ from './russ.js';
 
 const meta = {
   letters: 'Й|Ю|Ц|Б|У|Ь|К|Т|Е|И|Н|М|Г|С|Ш|Ч|Щ|Я|З|Ё|Ъ|Ф|Э|Ы|Ж|В|Д|А|Л|П|О|Р|Й',
-  title: 'Титанический'
+  title: 'Титанический',
 };
 
 function to(origin) {
   const originArr = Array.from(origin.toLowerCase());
   let result = '';
-  originArr.forEach(letter => {
+  originArr.forEach((letter) => {
     const id = russ.toLowerCase().split('|').indexOf(letter);
     if (id == -1) {
       result += letter;
@@ -22,7 +22,7 @@ function to(origin) {
 function from(origin) {
   const originArr = Array.from(origin.toLowerCase());
   let result = '';
-  originArr.forEach(letter => {
+  originArr.forEach((letter) => {
     const id = meta.letters.toLowerCase().split('|').indexOf(letter);
     if (id == -1) {
       result += letter;

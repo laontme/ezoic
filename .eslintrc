@@ -1,0 +1,36 @@
+{
+  "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@babel",
+    "vue"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/recommended"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "vue/max-attributes-per-line": 0,
+    "vue/singleline-html-element-content-newline": 0
+  }
+}
